@@ -11,6 +11,8 @@ var babel_polyfill = require('babel-polyfill')
 // should allow sorting alphabetically by name
 // should allow whitelisting specific fields
 
+// Easier ways to do this: express-api- query handler
+
 app.get('/', function (req, respond) {
   fetch('https://raw.githubusercontent.com/jsstrn/ga-wdi-class/gh-pages/js/data.json')
     // should respond with JSON data
@@ -88,3 +90,6 @@ var server = app.listen(3000, () => {
   var port = server.address().port
   console.log('Example app listening at http://%s:%s', host, port)
 })
+
+// export default app
+module.export = app

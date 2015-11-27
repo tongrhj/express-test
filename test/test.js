@@ -1,22 +1,19 @@
 'use strict'
+var app = require('../app.js')
+
 var expect = require('chai').expect
+var request = require('supertest')
 
-describe('Server', () => {
 
-    // describe('JSON Data', () => {
-    //
-    //   it('should respond with JSON data', () => {
-    //     var sampleData = server
-    //     expect(sampleData).to.be.true
-    //   })
-    //
-    // })
-
+describe('GET /', () => {
+  it('responds with list of student json', function (done) {
+    request(app)
+      .get('/')
+      .set('Content-Type', '/json/')
+      .expect(200)
+      .end((err, res) => {
+        if (err) return done(err)
+        done()
+      })
+  })
 })
-
-// Server
-// should respond with JSON data
-// should provide a list of all class participants
-// should allow searching by name
-// should allow sorting alphabetically by name
-// should allow whitelisting specific fields

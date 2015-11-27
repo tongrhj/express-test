@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js --exec babel-node",
+    "sorter": "nodemon index.js --exec babel-node",
+    "scoreboard": "nodemon app.js --exec babel-node",
     "test": "mocha",
     "test:cover": "babel-node node_modules/.bin/babel-istanbul cover _mocha",
     "codecov": "cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js"
@@ -23,7 +24,8 @@
     "codecov.io": "^0.1.6",
     "mocha": "^2.3.4",
     "mocha-lcov-reporter": "^1.0.0",
-    "nodemon": "^1.8.1"
+    "nodemon": "^1.8.1",
+    "supertest": "^1.1.0"
   },
   "dependencies": {
     "express": "^4.13.3",
