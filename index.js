@@ -1,4 +1,3 @@
-
 var express = require('express')
 var app = express()
 var fetch = require('node-fetch')
@@ -85,11 +84,5 @@ app.get('/search', function (req, respond) {
     })
 })
 
-var server = app.listen(3000, () => {
-  var host = server.address().address
-  var port = server.address().port
-  console.log('Example app listening at http://%s:%s', host, port)
-})
-
 // export default app
-module.export = app
+module.exports = app
