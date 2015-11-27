@@ -51,6 +51,23 @@ describe('GET /search?sort=desc', () => {
         done()
       })
   })
+
+  it('responds with an ascending alphabetically sorted list', function (done) {
+    request(app)
+      .get('/search?sort=asc')
+      .set('Content-Type', '/json/')
+      .expect((res) => {
+        var lastItemIndex = res.body.length - 1
+        console.log('Name ' + lastItemIndex + ' ' + res.body[lastItemIndex]['name'])
+        if (res.body[lastItemIndex]['name'] !== 'Albert Salim') throw new Error('Albert is not First Name')
+        console.log('Name 1 ' + res.body[0]['name'])
+        if (res.body[0]['name'] !== 'Your Name Here') throw new Error('Your Name Here is not Last Name')
+      })
+      .end((err, res) => {
+        if (err) return done(err)
+        done()
+      })
+  })
 })
 
 describe('GET /search?sort=desc', () => {
