@@ -3,5 +3,8 @@ node_js:
   - 5.1
 before_install:
   - pip install codecov
+script:
+  - npm run test:cover
 after_success:
+  - npm run report
   - codecov

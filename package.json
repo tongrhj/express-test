@@ -6,6 +6,7 @@
   "scripts": {
     "sorter": "nodemon index.js --exec babel-node",
     "scoreboard": "nodemon app.js --exec babel-node",
+    "report": "cat ./coverage/lcov.info | codecov",
     "test": "mocha",
     "test:cover": "babel-node node_modules/.bin/babel-istanbul cover _mocha",
     "codecov": "cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js"
