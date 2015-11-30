@@ -1,9 +1,4 @@
-var app = require('index.js')
-
-var server = app.listen(process.env.port || 3000)
-
-// export default app
-module.exports = {
-    server : server,
-    app : app
-};
+const app = require('./index.js')
+const port = process.env.PORT || 12345
+app.listen(port)
+console.log(`Ready on port ${ port }`)

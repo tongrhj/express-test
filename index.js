@@ -1,7 +1,7 @@
 var express = require('express')
 var app = express()
 var fetch = require('node-fetch')
-var babel_polyfill = require('babel-polyfill')
+// var babel_polyfill = require('babel-polyfill')
 
 // Express Server Assignment Requirements
 // should respond with JSON data

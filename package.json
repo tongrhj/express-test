@@ -1,9 +1,10 @@
 {
-  "name": "express-tes",
+  "name": "express-test",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
+    "start": "node server.js",
     "sorter": "nodemon index.js --exec babel-node",
     "scoreboard": "nodemon app.js --exec babel-node",
     "report": "cat ./coverage/lcov.info | codecov",
