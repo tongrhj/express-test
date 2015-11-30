@@ -1,23 +1,36 @@
-var express = require('express')
-var app = express()
-var scores = require('dummyData/scores.json')
+const express = require('express')
+const scoreboard = require('./dummyData/scores.json')
+const bodyParser = require('body-parser')
+const app = express()
+app.use(express.static('public'))
+app.use(bodyParser.json())
 
-// Get Scores
-app.get('/', (req, res) => {
-  res.json(scores)
+app.get('/scores', (req, res) => {
+  res.json(scoreboard)
 })
 
-// Get Score by ID
-app.get('/:scoreId', (req, res) => {
-
+app.get('/scores/:id', (req, res) => {
+  const score = scoreboard[req.params.id]
+  res.json(score)
 })
 
-// Add Score
-app.post()
+// create
+app.post('/scores', (req, res) => {
+  const score = req.body
+  scoreboard.push(score)
+  res.json(score)
+})
 
-// Update Score
-get.put()
+// update
+app.put('/scores/:id', (req, res) => {
+  scoreboard[req.params.id] = req.body
+  res.json(scoreboard[req.params.id])
+})
 
-// Delete Score
-// Use the 'delete' operator. Append only, don't delete from your database
-app.delete()
+// delete
+app.delete('/scores/:id', (req, res) => {
+  delete scoreboard[req.params.id]
+  res.send(scoreboard)
+})
+
+module.exports = app
