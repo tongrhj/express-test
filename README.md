@@ -4,3 +4,8 @@
 Build a read-only JSON Api with Express
 
 Retrieves Class List
+
+## Install Class List sorter
+```
+npm run sorter
+```
