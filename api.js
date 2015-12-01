@@ -88,14 +88,14 @@ app.get('/students', function (req, respond) {
     })
 })
 
+    }
+  })
 // scoreboard
 app.get('/scores', (req, res) => {
   res.json(scoreboard)
 })
 
 app.get('/scores/:id', (req, res) => {
-  const score = scoreboard[req.params.id]
-  res.json(score)
 })
 
 // create
