@@ -20,7 +20,7 @@ describe('GET /', () => {
 describe('GET /students?name=Jared%20Tong', () => {
   it('responds with only one student when searching by name', function (done) {
     request(app)
-      .get('/search?name=Jared%20Tong')
+      .get('/students?name=Jared%20Tong')
       .set('Content-Type', '/json/')
       .expect((res) => {
         console.log('Returns ' + res.body[0]['name'])
@@ -36,7 +36,7 @@ describe('GET /students?name=Jared%20Tong', () => {
 describe('GET /students?sort=desc', () => {
   it('responds with an alphabetically sorted list', function (done) {
     request(app)
-      .get('/search?sort=desc')
+      .get('/students?sort=desc')
       .set('Content-Type', '/json/')
       .expect((res) => {
         var lastItemIndex = res.body.length - 1
