@@ -90,11 +90,7 @@ app.get('/students', function (req, respond) {
 
 app.use((req, res, next) => {
   fs.readFile(scoreFile, 'utf8', (err, data) => {
-    if (err) {
-      return console.error(err)
-    } else {
-      scoreboard = JSON.parse(data)
-    }
+    (err) ? console.error(err) : scoreboard = JSON.parse(data)
     next()
   })
 })
