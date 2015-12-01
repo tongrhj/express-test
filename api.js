@@ -88,14 +88,24 @@ app.get('/students', function (req, respond) {
     })
 })
 
+app.use((req, res, next) => {
+  fs.readFile(scoreFile, 'utf8', (err, data) => {
+    if (err) {
+      return console.error(err)
+    } else {
+      scoreboard = JSON.parse(data)
     }
+    next()
   })
+})
+
 // scoreboard
 app.get('/scores', (req, res) => {
   res.json(scoreboard)
 })
 
 app.get('/scores/:id', (req, res) => {
+  res.json(scoreboard[req.params.id])
 })
 
 // create
@@ -105,7 +115,7 @@ app.post('/scores', (req, res) => {
   scoreboard.push(score)
   res.json(score)
 
-  fs.writeFile(scoreFile,JSON.stringify(scoreboard), printError)
+  fs.writeFile(scoreFile, JSON.stringify(scoreboard), printError)
 })
 
 // update
