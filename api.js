@@ -1,11 +1,19 @@
+'use strict'
+
+// 'let' because we want to edit the scoreboard
+let scoreboard = require('./dummyData/scores.json')
+
+const scoreFile = './dummyData/scores.json'
+
 const express = require('express')
-const scoreboard = require('./dummyData/scores.json')
 const bodyParser = require('body-parser')
 const app = express()
 app.use(express.static('public'))
 app.use(bodyParser.json())
 
 const fetch = require('node-fetch')
+
+const fs = require('fs')
 
 // sorter
 app.get('/', function (req, respond) {
@@ -80,7 +88,6 @@ app.get('/students', function (req, respond) {
     })
 })
 
-
 // scoreboard
 app.get('/scores', (req, res) => {
   res.json(scoreboard)
@@ -94,20 +101,40 @@ app.get('/scores/:id', (req, res) => {
 // create
 app.post('/scores', (req, res) => {
   const score = req.body
+  console.log(score)
   scoreboard.push(score)
   res.json(score)
+
+  fs.writeFile(scoreFile,JSON.stringify(scoreboard), printError)
 })
 
 // update
 app.put('/scores/:id', (req, res) => {
   scoreboard[req.params.id] = req.body
   res.json(scoreboard[req.params.id])
+
+  fs.writeFile(scoreFile,JSON.stringify(scoreboard), printError)
 })
 
 // delete
 app.delete('/scores/:id', (req, res) => {
   delete scoreboard[req.params.id]
   res.send(scoreboard)
+
+  fs.writeFile(scoreFile,JSON.stringify(scoreboard), printError)
 })
 
 module.exports = app
+
+function printError (err) {
+   if (err) {
+       return console.error(err)
+   }
+   console.log("Data written successfully!")
+   fs.readFile(scoreFile, function (err, data) {
+      if (err) {
+         return console.error(err)
+      }
+      console.log("Asynchronous read: " + data.toString())
+   })
+ }

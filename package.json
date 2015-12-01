@@ -5,7 +5,7 @@
   "main": "api.js",
   "scripts": {
     "start": "node server.js",
-    "sorter": "nodemon sorter.js --exec babel-node",
+    "dev": "nodemon server.js --exec babel-node",
     "scoreboard": "nodemon scoreboard.js --exec babel-node",
     "report": "cat ./coverage/lcov.info | codecov",
     "test": "mocha",
