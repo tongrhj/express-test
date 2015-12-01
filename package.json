@@ -2,7 +2,7 @@
   "name": "express-test",
   "version": "1.0.0",
   "description": "",
-  "main": "sorter.js",
+  "main": "api.js",
   "scripts": {
     "start": "node server.js",
     "sorter": "nodemon sorter.js --exec babel-node",
