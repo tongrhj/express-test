@@ -1,5 +1,5 @@
 'use strict'
-var app = require('../index.js')
+var app = require('../api.js')
 
 var expect = require('chai').expect
 var request = require('supertest')
@@ -17,7 +17,7 @@ describe('GET /', () => {
   })
 })
 
-describe('GET /search?name=Jared%20Tong', () => {
+describe('GET /students?name=Jared%20Tong', () => {
   it('responds with only one student when searching by name', function (done) {
     request(app)
       .get('/search?name=Jared%20Tong')
@@ -33,7 +33,7 @@ describe('GET /search?name=Jared%20Tong', () => {
   })
 })
 
-describe('GET /search?sort=desc', () => {
+describe('GET /students?sort=desc', () => {
   it('responds with an alphabetically sorted list', function (done) {
     request(app)
       .get('/search?sort=desc')
@@ -53,7 +53,7 @@ describe('GET /search?sort=desc', () => {
 
   it('responds with an ascending alphabetically sorted list', function (done) {
     request(app)
-      .get('/search?sort=asc')
+      .get('/students?sort=asc')
       .set('Content-Type', '/json/')
       .expect((res) => {
         var lastItemIndex = res.body.length - 1
@@ -72,7 +72,7 @@ describe('GET /search?sort=desc', () => {
 describe('GET /search?sort=desc', () => {
   it('responds with whitelisted field eg. githubURL', function (done) {
     request(app)
-      .get('/search?type=githubURL')
+      .get('/students?type=githubURL')
       .set('Content-Type', '/json/')
       .expect((res) => {
         console.log('Github URL at index 0: ' + res.body[0])
