@@ -1,146 +1,76 @@
 'use strict'
 
-// 'let' because we want to edit the scoreboard
-let scoreboard = require('./dummyData/scores.json')
-
-const scoreFile = './dummyData/scores.json'
-
 const express = require('express')
-const bodyParser = require('body-parser')
 const app = express()
+const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
+
 app.use(express.static('public'))
 app.use(bodyParser.json())
+mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASSWORD + '@ds061954.mongolab.com:61954/wdi-sg-playground')
 
-const fetch = require('node-fetch')
+const PlayerScore = mongoose.model('Score', {
+  name: String,
+  score: Number
+})
 
-const fs = require('fs')
-
-// sorter
-app.get('/', function (req, respond) {
-  fetch('https://raw.githubusercontent.com/jsstrn/ga-wdi-class/gh-pages/js/data.json')
-    // should respond with JSON data
-    .then(res => {
-      // if (res.ok && res.headers.get("content-type") === "application/json")  { return res.json() }
-      if (res.ok && res.headers.get('content-type') === 'text/plain; charset=utf-8') {
-        return res.json()
-      } else {
-        throw new Error('ERROR')
-      }
-    })
-    // Returns a list comprising only student names
-    // .then(res => {
-    //   var listOfStudentNames = res.students.map((student) => student.name)
-    //   return listOfStudentNames
-    // })
-    .then(res => {
-      respond.send(res)
+app.get('/', (req, res) => {
+  PlayerScore
+    .find(function (err, data) {
+      if (err) return console.error(err)
+      res.json(data)
     })
 })
 
-app.get('/students', function (req, respond) {
-  fetch('https://raw.githubusercontent.com/jsstrn/ga-wdi-class/gh-pages/js/data.json')
-    // should respond with JSON data
-    .then(res => {
-      // if (res.ok && res.headers.get("content-type") === "application/json")  { return res.json() }
-      if (res.ok && res.headers.get('content-type') === 'text/plain; charset=utf-8') {
-        return res.json()
-      } else {
-        throw new Error('ERROR')
-      }
-    })
-    .then(res => {
-      var listOfStudents = res.students
-      return listOfStudents
-    })
-    // Search for Name
-    .then(res => {
-      if (req.query.name) {
-        var searchResult = res.filter((student) => { return student.name === req.query.name })
-        return searchResult
-      } else {
-        return res
-      }
-    })
-    // Search by Type
-    .then(res => {
-      if (req.query.type) {
-        var searchResult = res.map((student) => student[req.query.type])
-        return searchResult
-      } else {
-        return res
-      }
-    })
-    // Sort alphabetically
-    .then(res => {
-      var sortedList
-      if (req.query.sort === 'desc') {
-        sortedList = res.sort((a, b) => a.name.localeCompare(b.name))
-        return sortedList
-      } else if (req.query.sort) {
-        sortedList = res.sort((a, b) => a.name.localeCompare(b.name) * -1)
-        return sortedList
-      } else {
-        return res
-      }
-    })
-    .then(res => {
-      respond.send(res)
-    })
-})
-
-app.use((req, res, next) => {
-  fs.readFile(scoreFile, 'utf8', (err, data) => {
-    (err) ? console.error(err) : scoreboard = JSON.parse(data)
-    next()
-  })
-})
-
-// scoreboard
 app.get('/scores', (req, res) => {
-  res.json(scoreboard)
+  PlayerScore
+    .find(function (err, data) {
+      if (err) return console.error(err)
+    })
+    .select('name score')
+    .sort({ score: -1 })
+    .then(data => {
+      res.json(data)
+    })
 })
 
-app.get('/scores/:id', (req, res) => {
-  res.json(scoreboard[req.params.id])
+app.get('/scores/:name', (req, res) => {
+  PlayerScore.find({ name: req.params.name }, (err, data) => {
+    if ((err) || !data.length) { res.status(404).end('Score Not Found') }
+  })
+  .then(data => { res.json(data) })
 })
 
 // create
 app.post('/scores', (req, res) => {
-  const score = req.body
-  console.log(score)
-  scoreboard.push(score)
-  res.json(score)
-
-  fs.writeFile(scoreFile, JSON.stringify(scoreboard), printError)
+  const score = new PlayerScore(req.body)
+  score.save(err => {
+    if (err) res.status(404).end('Score Not Found')
+    res.json(score)
+  })
 })
 
 // update
-app.put('/scores/:id', (req, res) => {
-  scoreboard[req.params.id] = req.body
-  res.json(scoreboard[req.params.id])
-
-  fs.writeFile(scoreFile,JSON.stringify(scoreboard), printError)
+app.put('/scores/:name/:score', (req, res) => {
+  PlayerScore.findOneAndUpdate({ name: req.params.name }, req.body, { new: true }, (err, data) => {
+    if (err) {
+      return console.error(err)
+    } else if (data) {
+      console.log('Updated', JSON.stringify(data))
+      res.json(data)
+    } else {
+      console.log('Not Found')
+      res.status(404).end('Score not found')
+    }
+  })
 })
 
 // delete
-app.delete('/scores/:id', (req, res) => {
-  delete scoreboard[req.params.id]
-  res.send(scoreboard)
-
-  fs.writeFile(scoreFile,JSON.stringify(scoreboard), printError)
+app.delete('/scores', (req, res) => {
+  PlayerScore.findOneAndRemove({ name: req.body.name }, (err, data) => {
+    if (err) return console.error(err)
+    res.json(data)
+  })
 })
 
 module.exports = app
-
-function printError (err) {
-   if (err) {
-       return console.error(err)
-   }
-   console.log("Data written successfully!")
-   fs.readFile(scoreFile, function (err, data) {
-      if (err) {
-         return console.error(err)
-      }
-      console.log("Asynchronous read: " + data.toString())
-   })
- }

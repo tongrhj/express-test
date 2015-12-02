@@ -4,7 +4,7 @@ node_js:
 script:
   - npm run test:cover
 after_success:
-  - npm run report
+  - npm run test:report
 cache:
   directories:
     - node_modules
