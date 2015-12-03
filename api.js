@@ -27,7 +27,6 @@ app.get('/scores', (req, res) => {
     .find(function (err, data) {
       if (err) return console.error(err)
     })
-    .select('name score')
     .sort({ score: -1 })
     .then(data => {
       res.json(data)
