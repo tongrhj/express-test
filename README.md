@@ -9,3 +9,7 @@ Built for General Assembly Singapore WDI 2015 class to learn Express, Mongoose a
 ```
 npm install
 ```
+
+## API Documentation
+
+http://docs.gascoreboard.apiary.io/#reference/0/scores-collection
