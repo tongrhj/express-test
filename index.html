@@ -12,10 +12,15 @@
   </head>
   <body style="background-color: coral;">
 
-      <div style="margin: 0 auto;width: 300px;height:350px;background-color: white;text-align:center;display:flex;justify-content:center;align-items:center;">
+    <div style="display:flex;justify-content:space-around;align-items:center;">
+      <div style="width: 300px;height:350px;background-color: white;text-align:center;display:flex;justify-content:center;align-items:center;">
         <input id="btn-login" class="btn-login" type="submit" style="font-size:100px;"/>
         <p>Welcome <span id="name"></span></p>
       </div>
+
+      <div style="width: 300px;height:350px;background-color: white;text-align:center;display:flex;justify-content:center;align-items:center;" id="scoreboard">
+      </div>
+    </div>
 
       <!-- <div style="margin: 0 auto;width: 250px;height:400px;background-color: white;text-align:center;display:flex;justify-content:center;align-items:center;" id="scoreboard">
       </div> -->
@@ -67,13 +72,13 @@
         //   });
         // }
 
-        // fetch('/scores', {
-        //   headers: {
-        //     'Authorization': 'Bearer ' + localStorage.getItem('id_token')
-        //   },
-        //   method: 'GET',
-        //   cache: false
-        // }).then((scores) => document.querySelector('#scoreboard').textContent = JSON.stringify(scores))
+        fetch('/scores', {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+          },
+          method: 'GET',
+          cache: false
+        }).then((scores) => document.querySelector('#scoreboard').textContent = JSON.stringify(scores))
 
         // if (hash && hash.error) {
         //   alert('There was an error: ' + hash.error + '\n' + hash.error_description);
