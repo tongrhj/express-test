@@ -1,5 +1,5 @@
 'use strict'
-var app = require('../api.js')
+var app = require('../app/api.js')
 var expect = require('chai').expect
 var request = require('supertest')
 

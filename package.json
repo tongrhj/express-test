@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node app/server.js",
     "dev": "nodemon app/server.js --exec babel-node",
-    "test": "standard app && mocha",
+    "test": "standard app",
     "test:cover": "babel-node node_modules/.bin/babel-istanbul cover _mocha",
     "test:report": "cat ./coverage/lcov.info | codecov",
     "test:codecov": "cat ./coverage/coverage.json | ./node_modules/codecov.io/bin/codecov.io.js"
