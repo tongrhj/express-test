@@ -1,5 +1,6 @@
 # Express Template
 [![Build Status](https://travis-ci.org/tongrhj/express-test.svg?branch=master)](https://travis-ci.org/tongrhj/express-test) [![codecov.io](https://codecov.io/github/tongrhj/express-test/coverage.svg?branch=master)](https://codecov.io/github/tongrhj/express-test?branch=master)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-green.svg?style=flat-square)](https://github.com/feross/standard)
 
 Simple RESTful API to create, read, update and delete (CRUD) player scores for a non-existant game.
 
