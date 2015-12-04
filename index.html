@@ -18,7 +18,7 @@
         <p>Welcome <span id="name"></span></p>
       </div>
 
-      <div style="width: 300px;height:350px;background-color: white;text-align:center;display:flex;justify-content:center;align-items:center;" id="scoreboard">
+      <div style="width: 300px;background-color: white;flex-direction:column;text-align:center;display:flex;justify-content:center;align-items:center;" id="scoreboard">
       </div>
     </div>
 
@@ -27,29 +27,29 @@
 
 
       <script type="text/javascript">
-        var lock = new Auth0Lock('LRPGy0n09P5sE8FbmWlUQhXRUCY2EI2H', 'tongrhj.auth0.com');
+        var lock = new Auth0Lock('LRPGy0n09P5sE8FbmWlUQhXRUCY2EI2H', 'tongrhj.auth0.com')
         // var lock = new Auth0Lock(
         //     // These properties are set in auth0-variables.js
         //     AUTH0_CLIENT_ID,
         //     AUTH0_DOMAIN
         // )
 
-        var userProfile;
+        var userProfile
 
         document.querySelector('#btn-login').addEventListener('click', function() {
           lock.show(function(err, profile, token) {
             if (err) {
               // Error callback
-              console.error("Something went wrong: ", err);
-              alert("Something went wrong, check the Console errors");
+              console.error("Something went wrong: ", err)
+              alert("Something went wrong, check the Console errors")
             } else {
               // Success calback
 
               // Save the JWT token.
-              localStorage.setItem('userToken', token);
+              localStorage.setItem('userToken', token)
 
               // Save the profile
-              userProfile = profile;
+              userProfile = profile
 
               document.getElementById('name').textContent = profile.name;
 
@@ -61,14 +61,19 @@
                 method: 'GET',
                 cache: false
               })
-                .then((scores) => document.querySelector('#scoreboard').textContent = scores.json())
-                .then((json) => console.log(json.json()))
+                .then((res) => res.json())
+                .then((res) => {
+                  console.log(res)
+                  res.forEach((doc) => {
+                    var highscore = JSON.stringify(doc.name) + ' scored ' + JSON.stringify(doc.score)
+                    var newEntry = document.querySelector('#scoreboard').appendChild(document.createElement("p"))
+                    newEntry.textContent = highscore
+                  })
+                })
             }
-          });
+          })
 
-        });
-
-
+        })
       </script>
   </body>
 </html>
