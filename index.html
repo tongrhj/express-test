@@ -52,37 +52,23 @@
               userProfile = profile;
 
               document.getElementById('name').textContent = profile.name;
+
+            // Fetch the scoreboard since user is now authenticated
+              fetch('/scores', {
+                headers: {
+                  'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+                },
+                method: 'GET',
+                cache: false
+              })
+                .then((scores) => document.querySelector('#scoreboard').textContent = scores.json())
+                .then((json) => console.log(json.json()))
             }
           });
 
         });
 
-        // if (hash && hash.id_token) {
-        //   //save the token in the session:
-        //   localStorage.setItem('id_token', hash.id_token);
-        // }
-        //
-        // var id_token = localStorage.getItem('id_token');
-        // if (id_token) {
-        //   lock.getProfile(id_token, function (err, profile) {
-        //     if (err) {
-        //       return alert('There was an error geting the profile: ' + err.message);
-        //     }
-        //     document.getElementById('name').textContent = profile.name;
-        //   });
-        // }
 
-        fetch('/scores', {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('userToken')
-          },
-          method: 'GET',
-          cache: false
-        }).then((scores) => document.querySelector('#scoreboard').textContent = JSON.stringify(scores))
-
-        // if (hash && hash.error) {
-        //   alert('There was an error: ' + hash.error + '\n' + hash.error_description);
-        // }
       </script>
   </body>
 </html>
