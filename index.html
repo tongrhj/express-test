@@ -63,7 +63,6 @@
               })
                 .then((res) => res.json())
                 .then((res) => {
-                  console.log(res)
                   res.forEach((doc) => {
                     var highscore = JSON.stringify(doc.name).replace(/^"(.+(?="$))"$/, '$1') + ' scored ' + JSON.stringify(doc.score)
                     var newEntry = document.querySelector('#scoreboard').appendChild(document.createElement("p"))
