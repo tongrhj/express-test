@@ -4,9 +4,11 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
-app.use(express.static('public'))
 app.use(bodyParser.json())
+app.use(cors())
+
 mongoose.connect('mongodb://' + process.env.MONGODB_USER + ':' + process.env.MONGODB_PASSWORD + '@ds061954.mongolab.com:61954/wdi-sg-playground')
 
 const PlayerScore = mongoose.model('Score', {
@@ -15,11 +17,12 @@ const PlayerScore = mongoose.model('Score', {
 })
 
 app.get('/', (req, res) => {
-  PlayerScore
-    .find(function (err, data) {
-      if (err) return console.error(err)
-      res.json(data)
-    })
+  res.sendFile('index.html', { root: __dirname })
+  // PlayerScore
+  //   .find(function (err, data) {
+  //     if (err) return console.error(err)
+  //     res.json(data)
+  //   })
 })
 
 app.get('/scores', (req, res) => {
