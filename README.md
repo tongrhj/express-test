@@ -3,7 +3,7 @@
 
 Simple RESTful API to create, read, update and delete (CRUD) player scores for a non-existant game.
 
-Built for General Assembly Singapore WDI 2015 class to learn Express, Mongoose and MongoDB, RESTful API, test driven development with Mocha and Chai, code coverage with Istanbul and Codecov.io, API documentation with Apiary.io, and login authentication with Auth0
+Built for General Assembly Singapore WDI 2015 class to learn Express, Mongoose and MongoDB, RESTful API, test driven development with Mocha and Chai, code coverage with Istanbul and Codecov.io, API documentation with **Apiary.io**, and login authentication (Facebook) with **Auth0**
 
 ## Install
 ```
